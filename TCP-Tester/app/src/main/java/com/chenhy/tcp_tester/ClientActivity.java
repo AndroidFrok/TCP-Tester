@@ -140,15 +140,22 @@ public class ClientActivity extends Activity {
 
     /* 发送按钮处理函数：向输出流写数据 */
     public void send() {
-        try {
-            /* 向输出流写数据 */
-            writer.write(edit_send.getText().toString()+"\n");
-            writer.flush();
-            /* 更新UI */
-            edit_send.setText("");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+         new Thread(new Runnable() {
+             @Override
+             public void run() {
+                 try {
+                     /* 向输出流写数据 */
+                     writer.write(edit_send.getText().toString()+"\n");
+                     writer.flush();
+                     /* 更新UI */
+                     edit_send.setText("");
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+
+             }
+         }).start();
+
     }
 
     @Override
